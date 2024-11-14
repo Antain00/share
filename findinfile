@@ -1,29 +1,32 @@
-Voici un script Python qui recherche un mot-clé donné dans tous les fichiers d'un répertoire spécifié. Il parcourt chaque fichier du répertoire, trouve les occurrences du mot-clé et affiche les lignes où elles apparaissent, ainsi que le nom du fichier correspondant.
-
-### Script Python : Recherche de mot-clé dans un répertoire
-
-```python
 import os
 
-def chercher_occurrences(dossier, mot_cle):
+def chercher_occurrences_reseau(chemins_partages, mot_cle):
     """
-    Recherche les occurrences d'un mot-clé dans tous les fichiers d'un répertoire donné.
+    Recherche les occurrences d'un mot-clé dans les fichiers de plusieurs répertoires partagés Windows.
     
-    :param dossier: Le chemin du répertoire où effectuer la recherche
-    :param mot_cle: Le mot-clé à rechercher
+    :param chemins_partages: Liste de chemins réseau des dossiers partagés (ex: [r"\\serveur1\partage", r"\\serveur2\partage"])
+    :param mot_cle: Mot-clé à rechercher
     """
-    for root, dirs, files in os.walk(dossier):
-        for fichier in files:
-            chemin_fichier = os.path.join(root, fichier)
-            try:
-                with open(chemin_fichier, 'r', encoding='utf-8') as f:
-                    lignes = f.readlines()
-                    for numero, ligne in enumerate(lignes, 1):
-                        if mot_cle in ligne:
-                            print(f"Fichier: {chemin_fichier} | Ligne {numero} : {ligne.strip()}")
-            except Exception as e:
-                print(f"Erreur de lecture du fichier {chemin_fichier} : {e}")
+    for chemin_partage in chemins_partages:
+        print(f"\n--- Recherche dans le partage : {chemin_partage} ---")
+        for root, dirs, files in os.walk(chemin_partage):
+            for fichier in files:
+                chemin_fichier = os.path.join(root, fichier)
+                try:
+                    with open(chemin_fichier, 'r', encoding='utf-8') as f:
+                        lignes = f.readlines()
+                        for numero, ligne in enumerate(lignes, 1):
+                            if mot_cle in ligne:
+                                print(f"Fichier: {chemin_fichier} | Ligne {numero} : {ligne.strip()}")
+                except Exception as e:
+                    print(f"Erreur de lecture du fichier {chemin_fichier} : {e}")
 
 # Utilisation du script
-dossier = "/chemin/vers/votre/dossier"  # Remplacez par le chemin de votre répertoire
-mot_cle = "votre_mot
+chemins_partages = [
+    r"\\serveur1\partage",  # Remplacez par le chemin du premier dossier partagé
+    r"\\serveur2\partage",  # Remplacez par le chemin du deuxième dossier partagé
+    r"\\serveur3\partage"   # Ajoutez d'autres chemins si nécessaire
+]
+mot_cle = "votre_mot_cle"  # Le mot-clé à rechercher
+
+chercher_occurrences_reseau(chemins_partages, mot_cle)
