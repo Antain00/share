@@ -1,0 +1,99 @@
+.\preload.ps1 -Url "..." -Type1 "valeur1" -A 100 -B 200 -Type2 "valeur2" -X "abc" -Y "def"
+
+
+{
+  "sfullpecs": {
+    "spec": "default-spec",
+    "ids": ["IT:DEFAULT1", "IT:DEFAULT2"]
+  },
+  "block1": {
+    "a": 100,
+    "b": 200
+  },
+  "block2": {
+    "x": "abc",
+    "y": "def"
+  }
+}
+
+
+
+param(
+    [Parameter(Mandatory=$true)][string]$Url,
+
+    # Champs classiques
+    [string]$Spec,
+    [string[]]$Ids,
+
+    # Type de bloc
+    [string]$Type1,
+    [int]$A,
+    [int]$B,
+
+    [string]$Type2,
+    [string]$X,
+    [string]$Y
+)
+
+# Valeurs par défaut
+$defaultSpec = "default-spec"
+$defaultIds = @("IT:DEFAULT1", "IT:DEFAULT2")
+
+# JSON principal
+$body = @{
+    sfullpecs = @{
+        spec = $defaultSpec
+        ids  = $defaultIds
+    }
+}
+
+# Override simple
+if ($PSBoundParameters.ContainsKey('Spec')) { $body.sfullpecs.spec = $Spec }
+if ($PSBoundParameters.ContainsKey('Ids'))  { $body.sfullpecs.ids  = $Ids }
+
+# Block1 : si Type1 = valeur1
+if ($Type1 -eq "valeur1") {
+    $block1 = @{}
+
+    if ($PSBoundParameters.ContainsKey('A')) { $block1.a = $A } else { $block1.a = 1 }
+    if ($PSBoundParameters.ContainsKey('B')) { $block1.b = $B } else { $block1.b = 2 }
+
+    $body.block1 = $block1
+}
+
+# Block2 : si Type2 = valeur2
+if ($Type2 -eq "valeur2") {
+    $block2 = @{}
+
+    if ($PSBoundParameters.ContainsKey('X')) { $block2.x = $X } else { $block2.x = "X-default" }
+    if ($PSBoundParameters.ContainsKey('Y')) { $block2.y = $Y } else { $block2.y = "Y-default" }
+
+    $body.block2 = $block2
+}
+
+# Convertir en JSON
+$json = $body | ConvertTo-Json -Depth 10 -Compress
+
+Write-Host "➡️ Envoi de la requête POST à $Url avec le JSON suivant :" -ForegroundColor Cyan
+Write-Host $json -ForegroundColor Yellow
+
+# Appel REST avec gestion d’erreurs
+try {
+    $response = Invoke-RestMethod -Uri $Url -Method Post -Body $json -ContentType "application/json" -TimeoutSec 15
+    Write-Host "✅ Succès :" -ForegroundColor Green
+    Write-Host $response | ConvertTo-Json -Depth 10
+    exit 0
+}
+catch {
+    Write-Host "❌ Erreur lors de l’appel REST :" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor DarkRed
+    exit 1
+}
+
+
+
+
+.\preload.ps1 -Url "..." -Type1 "valeur1" -A 123
+
+
+"block1": { "a": 123, "b": 2 }
