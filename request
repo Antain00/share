@@ -91,7 +91,18 @@ catch {
 }
 
 
+catch {
+    Write-Host "❌ Erreur lors de l’appel REST :" -ForegroundColor Red
+    Write-Host "Message : $($_.Exception.Message)" -ForegroundColor DarkRed
 
+    if ($_.Exception.Response -ne $null) {
+        $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+        $responseBody = $reader.ReadToEnd()
+        Write-Host "`n🪵 Réponse brute du serveur :" -ForegroundColor Yellow
+        Write-Host $responseBody
+    }
+
+    exit 1
 
 .\preload.ps1 -Url "..." -Type1 "valeur1" -A 123
 
