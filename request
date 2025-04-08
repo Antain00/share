@@ -108,3 +108,26 @@ catch {
 
 
 "block1": { "a": 123, "b": 2 }
+
+
+
+
+param (
+    [string]$DateParam
+)
+
+try {
+    $parsedDate = [datetime]::ParseExact($DateParam, "yyyyMMdd", $null)
+    $finalDate = $parsedDate.ToString("yyyy/MM/dd") + " 23:59:59"
+}
+catch {
+    Write-Host "❌ Mauvais format : utilise yyyyMMdd (ex: 20250804)" -ForegroundColor Red
+    exit 1
+}
+
+$body = @{
+    date = $finalDate
+}
+
+$json = $body | ConvertTo-Json -Depth 10 -Compress
+Write-Host $json
