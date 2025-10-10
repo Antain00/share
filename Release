@@ -1,0 +1,86 @@
+h1. 🧭 Monthly Release Management
+
+---
+
+h2. 🎯 Objective
+This page describes the monthly release management process for the staging, pre-production, and production environments.  
+It ensures quality, traceability, and coordination across all teams (Development, QA, Product, Operations, etc.).
+
+---
+
+h2. 📅 Monthly Release Schedule
+
+|| Step || Week || Description || Deliverables || Owner ||
+| *Code Freeze* | Week 1 (Monday) | Freeze the code in the release branch. | Release branch created, initial tag. | Tech Lead / Developer |
+| *Build & Automated Tests* | Week 1 (Tuesday - Thursday) | Run builds, execute unit and integration tests. | Build report, CI/CD test results. | DevOps / QA |
+| *Internal Testing Phase* | Week 2 | Functional, regression, and internal UAT testing. | Internal test report, validated JIRA tickets. | QA / PO |
+| *Business UAT Phase* | Week 3 | Business validation in the staging environment. | UAT validation report. | Product Owner / Business |
+| *Production Preparation* | Week 3 (End) | Prepare changelog, release review, rollback plan. | Release notes, rollback plan. | DevOps / Release Manager |
+| *Production Deployment* | Week 4 (Wednesday) | Supervised deployment, post-deployment validation. | Released version, production validation report. | DevOps / QA |
+| *Post-mortem / Retrospective* | Week 4 (Friday) | Review issues and lessons learned. | Post-mortem report. | Release Manager / QA Team |
+
+---
+
+h2. 🔁 Release Workflow
+
+{expand:title=Show full workflow}
+# Create *release branch* from *main* or *develop*
+# Run automated CI/CD pipelines
+# QA validation (manual + automated tests)
+# Business UAT and Product Owner validation
+# *Go/No-Go* meeting before production
+# Production deployment + post-deployment checks
+# Retrospective / continuous improvement
+{expand}
+
+---
+
+h2. 👥 RACI Matrix – Release Testing Phase
+
+|| Activity || Dev || QA || Product Owner || Release Manager || DevOps || Business ||
+| Write unit tests | R | C |  |  |  |  |
+| Run unit tests (CI) | A | C |  | I | C |  |
+| Prepare test data sets | C | R/A | C |  |  |  |
+| Functional tests (internal QA) |  | R/A | C |  |  |  |
+| Regression tests | C | R/A |  |  |  |  |
+| Performance / load tests |  | R |  | C | A |  |
+| User Acceptance Testing (UAT) |  | C | A | I |  | R |
+| Final validation before release | I | C | A | R | C | C |
+| Post-deployment verification | C | R/A | C | R | A | I |
+
+{panel:title=RACI Legend|borderStyle=solid|borderColor=#DDD|bgColor=#F7F7F7}
+*R* = Responsible (does the work)  
+*A* = Accountable (approves / owns the outcome)  
+*C* = Consulted (provides input)  
+*I* = Informed  
+{panel}
+
+---
+
+h2. 📄 Related Documents
+
+* [Release Notes Template|#]
+* [Production Deployment Checklist|#]
+* [Rollback Procedure|#]
+* [QA Test Report (JIRA)|#]
+
+---
+
+h2. 📈 Key Metrics
+
+* % of automated tests passed  
+* % of UAT tickets validated  
+* Average deployment time  
+* Number of post-release incidents  
+* Rollback rate  
+
+---
+
+h2. 💡 Best Practices
+
+{quote}
+✔️ Respect the *code freeze* to ensure stability.  
+✔️ Always document any issues found during testing.  
+✔️ Keep the changelog updated for every iteration.  
+✔️ Conduct a retrospective after each monthly release.  
+{quote}
