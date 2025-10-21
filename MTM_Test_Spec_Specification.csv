@@ -1,0 +1,7 @@
+Field,Description
+Project Name,MTM API Comparison
+Scope,"REST API comparison between REF and RC, Couchbase validation, and time extraction"
+Test Owner,QA Automation Team
+Version,1.0
+Created On,2025-10-21
+Tools,"Python, Pytest, Requests, Couchbase SDK"

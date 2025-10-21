@@ -1,0 +1,5 @@
+Metric,REF,RC,Delta,Status
+Load Time (s),4.21,4.33,+0.12,✅
+Compute Time (s),7.88,7.92,+0.04,✅
+Data Match %,100%,100%,0,✅
+Couchbase Validation,Passed,Passed,-,✅

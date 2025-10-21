@@ -1,0 +1,10 @@
+Test ID,Title,Description,Preconditions,Steps,Input Data,Expected Result,Priority,Automated,Script Path,Status
+TC-MTM-001,Compare REF vs RC results,"Run MTM 1 on both envs, compare REST API JSON responses",REF & RC available,"1. Run MTM 1
+2. Send JSON request
+3. Compare responses","{""run_id"":""MTM_1"",""parameters"":{""mode"":""compute""}}",Identical results (except timestamps),High,Yes,tests/api/test_mtm_comparison.py,Ready
+TC-MTM-002,Couchbase consistency,Validate data in Couchbase REF vs RC,Couchbase accessible,"1. Query documents
+2. Compare content",N/A,Data identical in both buckets,High,Yes,tests/db/test_couchbase_consistency.py,Ready
+TC-MTM-003,Execution time extraction,Extract and compare run times,MTM runs completed,"1. Parse API or Couchbase metrics
+2. Compare REF vs RC",API metrics JSON,Delta < 5% difference,Medium,Yes,tests/metrics/test_time_extraction.py,Ready
+TC-MTM-004,Error handling,Handle invalid JSON request,API reachable,"1. Send invalid payload
+2. Observe response",Invalid JSON,API returns 400 error,Low,Planned,tests/api/test_invalid_request.py,Planned

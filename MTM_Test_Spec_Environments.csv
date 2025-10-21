@@ -1,0 +1,3 @@
+Environment,URL,Database,Notes
+REF,https://api-ref.company.com/mtm/run,mtm_ref_bucket,Reference
+RC,https://api-rc.company.com/mtm/run,mtm_rc_bucket,Release Candidate
