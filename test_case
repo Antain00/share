@@ -1,0 +1,127 @@
+Onglet 1 : “Test Specification”
+
+Contient la description générale de la spec.
+
+Field	Description
+Project Name	MTM API Comparison
+Scope	REST API comparison between REF and RC, Couchbase validation, and time extraction
+Test Owner	QA Automation Team
+Version	1.0
+Created On	2025-10-21
+Tools	Python, Pytest, Requests, Couchbase SDK
+Onglet 2 : “Test Cases”
+
+➡️ Ce tableau contient tous tes cas de test documentés, exploitables pour automatisation.
+
+Test ID	Title	Description	Preconditions	Steps	Input Data	Expected Result	Priority	Automated	Script Path	Status
+TC-MTM-001	Compare REF vs RC results	Run MTM 1 on both envs, compare REST API JSON responses	REF & RC available	1. Run MTM 1
+2. Send JSON request
+3. Compare responses	{"run_id":"MTM_1","parameters":{"mode":"compute"}}	Identical results (except timestamps)	High	Yes	tests/api/test_mtm_comparison.py	Ready
+TC-MTM-002	Couchbase consistency	Validate data in Couchbase REF vs RC	Couchbase accessible	1. Query documents
+2. Compare content	N/A	Data identical in both buckets	High	Yes	tests/db/test_couchbase_consistency.py	Ready
+TC-MTM-003	Execution time extraction	Extract and compare run times	MTM runs completed	1. Parse API or Couchbase metrics
+2. Compare REF vs RC	API metrics JSON	Delta < 5% difference	Medium	Yes	tests/metrics/test_time_extraction.py	Ready
+TC-MTM-004	Error handling	Handle invalid JSON request	API reachable	1. Send invalid payload
+2. Observe response	Invalid JSON	API returns 400 error	Low	Planned	tests/api/test_invalid_request.py	Planned
+Onglet 3 : “Environment Setup”
+
+Documente les endpoints et bases pour exécution.
+
+Environment	URL	Database	Notes
+REF	https://api-ref.company.com/mtm/run
+	mtm_ref_bucket	Reference
+RC	https://api-rc.company.com/mtm/run
+	mtm_rc_bucket	Release Candidate
+Onglet 4 : “Metrics Example”
+
+Pour consigner les résultats ou comparer les temps d’exécution.
+
+Metric	REF	RC	Delta	Status
+Load Time (s)	4.21	4.33	+0.12	✅
+Compute Time (s)	7.88	7.92	+0.04	✅
+Data Match %	100%	100%	0	✅
+Couchbase Validation	Passed	Passed	—	✅
+
+
+
+from openpyxl import Workbook
+from datetime import date
+
+# Create workbook and sheets
+wb = Workbook()
+ws1 = wb.active
+ws1.title = "Test Specification"
+ws2 = wb.create_sheet("Test Cases")
+ws3 = wb.create_sheet("Environment Setup")
+ws4 = wb.create_sheet("Metrics Example")
+
+# Sheet 1: Test Specification
+spec_data = [
+    ["Field", "Description"],
+    ["Project Name", "MTM API Comparison"],
+    ["Scope", "REST API comparison between REF and RC, Couchbase validation, and time extraction"],
+    ["Test Owner", "QA Automation Team"],
+    ["Version", "1.0"],
+    ["Created On", str(date.today())],
+    ["Tools", "Python, Pytest, Requests, Couchbase SDK"]
+]
+for row in spec_data:
+    ws1.append(row)
+
+# Sheet 2: Test Cases
+test_cases_headers = [
+    "Test ID", "Title", "Description", "Preconditions", "Steps",
+    "Input Data", "Expected Result", "Priority", "Automated",
+    "Script Path", "Status"
+]
+test_cases_data = [
+    ["TC-MTM-001", "Compare REF vs RC results", 
+     "Run MTM 1 on both envs, compare REST API JSON responses",
+     "REF & RC available", 
+     "1. Run MTM 1\n2. Send JSON request\n3. Compare responses",
+     '{"run_id":"MTM_1","parameters":{"mode":"compute"}}',
+     "Identical results (except timestamps)", "High", "Yes", 
+     "tests/api/test_mtm_comparison.py", "Ready"],
+    
+    ["TC-MTM-002", "Couchbase consistency",
+     "Validate data in Couchbase REF vs RC", 
+     "Couchbase accessible", 
+     "1. Query documents\n2. Compare content",
+     "N/A",
+     "Data identical in both buckets", "High", "Yes",
+     "tests/db/test_couchbase_consistency.py", "Ready"],
+    
+    ["TC-MTM-003", "Execution time extraction",
+     "Extract and compare run times", 
+     "MTM runs completed", 
+     "1. Parse API or Couchbase metrics\n2. Compare REF vs RC",
+     "API metrics JSON",
+     "Delta < 5% difference", "Medium", "Yes",
+     "tests/metrics/test_time_extraction.py", "Ready"],
+    
+    ["TC-MTM-004", "Error handling",
+     "Handle invalid JSON request", 
+     "API reachable", 
+     "1. Send invalid payload\n2. Observe response",
+     "Invalid JSON",
+     "API returns 400 error", "Low", "Planned",
+     "tests/api/test_invalid_request.py", "Planned"]
+]
+
+ws2.append(test_cases_headers)
+for row in test_cases_data:
+    ws2.append(row)
+
+# Sheet 3: Environment Setup
+env_data = [
+    ["Environment", "URL", "Database", "Notes"],
+    ["REF", "https://api-ref.company.com/mtm/run", "mtm_ref_bucket", "Reference"],
+    ["RC", "https://api-rc.company.com/mtm/run", "mtm_rc_bucket", "Release Candidate"]
+]
+for row in env_data:
+    ws3.append(row)
+
+# Sheet 4: Metrics Example
+metrics_data = [
+    ["Metric", "REF", "RC", "Delta", "Status"],
+    ["Load Time (s)", 4.21, 4.33, "+0.
