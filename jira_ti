@@ -1,0 +1,66 @@
+🧾 Jira Ticket Example
+
+Project: QA Automation / MTM API
+Issue Type: Story (ou Task selon ta nomenclature)
+Summary: Write unit tests for MTM REST API comparison and Couchbase validation
+
+Description
+
+The goal of this task is to implement Python unit tests covering the MTM REST API logic and Couchbase data validation components.
+These tests will ensure that each function behaves as expected before full integration tests are executed between REF and RC environments.
+
+Context
+
+We have defined our test specification for the MTM project, including cases for:
+
+REST API comparison between REF and RC environments
+
+Couchbase data consistency check
+
+Execution time (load/compute) extraction
+
+Error handling for invalid JSON payloads
+
+This story focuses on writing unit-level automated tests that validate individual components before running end-to-end scenarios.
+
+Acceptance Criteria
+
+ Unit tests implemented for each Python module:
+
+api_comparison.py
+
+couchbase_utils.py
+
+metrics_parser.py
+
+ Each function has ≥ 80% coverage (measured with pytest --cov)
+
+ Tests use mock objects to isolate external dependencies (requests, Couchbase SDK)
+
+ Tests validate:
+
+JSON parsing and comparison logic
+
+Couchbase data structure mapping
+
+Timing extraction and computation
+
+ Test results successfully integrated into CI/CD pipeline (GitLab/Jenkins)
+
+ All tests pass locally and in CI
+
+Deliverables
+
+Unit test files under /tests/unit/
+
+Coverage report (coverage.xml)
+
+Updated README.md with test execution instructions
+
+Optional: Link to the test spec in Confluence
+
+Linked Issues
+
+🔗 [QA-1456] – MTM REST API Comparison Automation
+
+📘 Confluence: MTM Test Specification
